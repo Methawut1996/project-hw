@@ -24,7 +24,7 @@
             <div class="col-md-6">
               <input v-model="memberData.last_name" type="text" id="" />
             </div>
-            <div class="col-md-6"><label ></label>ตำเเหน่งในห้อง</label></div>
+            <div class="col-md-6"><label >ตำเเหน่งในห้อง</label></div>
             <div class="col-md-6">
               <input v-model="memberData.member_type" type="text" id="" />
             </div>
