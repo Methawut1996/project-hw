@@ -26,11 +26,14 @@
           <li>-</li>
           <li>228 หมู่ 1 อ.ทรายทอง จ.ปัตานี</li>
           <li class="edit-button">
-            <button type="button" class="button-edit btn btn-dark">แก้ไข</button>
-            <button type="button" class="button-dalete btn btn-danger">ลบ</button>
+            <button type="button" class="button-edit btn btn-dark">
+              แก้ไข
+            </button>
+            <button type="button" class="button-dalete btn btn-danger">
+              ลบ
+            </button>
           </li>
         </ul>
-        
       </div>
     </div>
   </div>
@@ -38,10 +41,11 @@
 
 <script>
 export default {};
-
 </script>
 
 <style lang="scss">
+@media only screen and (max-width: 600px) {
+}
 p,
 ul {
   margin: 0;
@@ -60,15 +64,15 @@ ul {
 }
 .head-profile-student {
   background: aliceblue;
-  border-radius:10px ;
+  border-radius: 10px;
   ul {
     width: 100%;
     list-style-type: none;
     display: flex;
-    // justify-content: space-between;
     padding: 0.5rem 1rem;
     align-items: center;
     li {
+      font-size: 17px;
       width: 14.5%;
     }
   }
@@ -78,7 +82,6 @@ ul {
     width: 100%;
     list-style-type: none;
     display: flex;
-    // justify-content: space-between;
     padding: 0.5rem 1rem;
     align-items: center;
     li {
@@ -90,7 +93,7 @@ ul {
   }
   .edit-button {
     display: flex;
-    button{
+    button {
       margin: 0 0.25rem;
       width: 60px;
     }
