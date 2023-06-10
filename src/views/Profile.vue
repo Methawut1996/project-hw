@@ -3,61 +3,67 @@
     <div class="container">
       <div class="head-content">
         <img src="../assets/img/user.png" alt="" />
-        <h2>รายชื่อนักเรียน {{ isEdit }}</h2>
+        <h2>รายชื่อนักเรียน</h2>
       </div>
       <div class="adddata-content">
-        <div class="w-75">
+        <div class="input-data-content-main">
+          <div class="head-input-data">
+            <h3>แก้ไขข้อมูลนักเรียน</h3>
+          </div>
+
           <div class="row">
-            <div class="col-md-6"><label>ห้อง</label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label>ห้อง </label></div>
+            <div class="col-md-12">
               <input v-model="memberData.room" type="text" id="" />
             </div>
-            <div class="col-md-6"><label>เลขที่</label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label>เลขที่</label></div>
+            <div class="col-md-12">
               <input v-model="memberData.rank" type="text" id="" />
             </div>
-            <div class="col-md-6"><label>ชื่อ </label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label>ชื่อ </label></div>
+            <div class="col-md-12">
               <input v-model="memberData.first_name" type="text" id="" />
             </div>
-            <div class="col-md-6"><label>นามสกุล</label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label>นามสกุล</label></div>
+            <div class="col-md-12">
               <input v-model="memberData.last_name" type="text" id="" />
             </div>
-            <div class="col-md-6"><label>ตำเเหน่งในห้อง</label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label>ตำเเหน่งในห้อง</label></div>
+            <div class="col-md-12">
               <input v-model="memberData.member_type" type="text" id="" />
             </div>
-            <div class="col-md-6"><label for="address">ที่อยู่</label></div>
-            <div class="col-md-6">
+            <div class="col-md-12"><label for="address">ที่อยู่</label></div>
+            <div class="col-md-12">
               <input v-model="memberData.address" type="text" id="address" />
             </div>
           </div>
+          <div class="button-add-data-main">
+            <button
+              type="button"
+              class="button-add-data btn btn-success"
+              @click="createMember"
+              v-if="isEdit"
+            >
+              เพิ่มข้อมูลนักเรียน
+            </button>
+            <button
+              type="button"
+              class="button-add-data btn btn-dark"
+              @click="editMember"
+              v-if="isEdit"
+            >
+              แก้ไขข้อมูลนักเรียน
+            </button>
+            <button
+              type="button"
+              class="button-add-data btn btn-success"
+              @click="createMember"
+              v-else
+            >
+              เพิ่มข้อมูลนักเรียน
+            </button>
+          </div>
         </div>
-        <button
-          type="button"
-          class="button-add-data btn btn-success"
-          @click="createMember"
-         v-if="isEdit"
-        >
-        เพิ่มข้อมูลนักเรียน
-        </button>
-        <button
-          type="button"
-          class="button-add-data btn btn-dark"
-          @click="editMember"
-          v-if="isEdit"
-        >
-          แก้ไขข้อมูลนักเรียน
-        </button>
-        <button
-          type="button"
-          class="button-add-data btn btn-success"
-          @click="createMember"
-          v-else
-        >
-          เพิ่มข้อมูลนักเรียน
-        </button>
       </div>
 
       <div class="head-profile-student">
@@ -163,10 +169,58 @@ export default {
 
 <style lang="scss">
 @media only screen and (max-width: 600px) {
+  .head-content{
+    justify-content: center;
+  } 
+  .input-data-content-main{
+    width: 100% !important;
+    button{
+      width: 40% !important;
+      font-size: 12px;
+      margin: 1rem 0.5rem 0 !important;
+      }
+  }
+  .head-profile-student{
+    table{
+    .button-edit {
+      button{
+        width: 40px !important;
+        font-size: 8px;
+      }
+    }
+    th{
+      font-size: 12px !important;
+    }
+    td{
+      font-size: 10px;
+    }
+  }
+  }
+ 
+  
 }
 p,
 ul {
   margin: 0;
+}
+.input-data-content-main {
+  padding: 1rem;
+  width: 40%;
+  margin: auto;
+  border: 1px solid black;
+  background: azure;
+  .head-input-data{
+    text-align: center;
+  }
+  input {
+    width: 100%;
+  }
+  .button-add-data-main {
+    text-align: center;
+    button {
+      margin: 1rem 1rem 0;
+    }
+  }
 }
 .head-content {
   display: flex;
@@ -180,16 +234,24 @@ ul {
     height: auto;
   }
 }
+.head-profile-student {
+  margin: 1rem 0;
+}
 table {
   background: azure;
   border: 1px solid black;
   text-align: center;
+  border-collapse: collapse;
+  table-layout: fixed;
+  
   th {
     font-size: 18px;
+    border: 1px solid black;
   }
   td {
     border: 1px solid black;
   }
+
   .head-table-content {
     background: aquamarine;
   }
@@ -201,6 +263,5 @@ table {
     }
   }
 }
-.button-add-data {
-}
+
 </style>
