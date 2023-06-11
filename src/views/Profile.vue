@@ -12,29 +12,29 @@
           </div>
 
           <div class="row">
-            <div class="col-md-12"><label>ห้อง </label></div>
+            <div class="col-md-12"><label for="room">ห้อง </label></div>
             <div class="col-md-12">
-              <input v-model="memberData.room" type="text" id="" />
+              <input v-model="memberData.room" type="text" id="room" placeholder="กรุณาใส่เลขห้อง" />
             </div>
-            <div class="col-md-12"><label>เลขที่</label></div>
+            <div class="col-md-12"><label for="number">เลขที่</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.rank" type="text" id="" />
+              <input v-model="memberData.rank" type="text" id="number" placeholder="กรุณาใส่เลขที่"/>
             </div>
-            <div class="col-md-12"><label>ชื่อ </label></div>
+            <div class="col-md-12"><label for="fristname">ชื่อ </label></div>
             <div class="col-md-12">
-              <input v-model="memberData.first_name" type="text" id="" />
+              <input v-model="memberData.first_name" type="text" id="fristname" placeholder="กรุณาใส่ชื่อ"/>
             </div>
-            <div class="col-md-12"><label>นามสกุล</label></div>
+            <div class="col-md-12"><label for="lastname">นามสกุล</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.last_name" type="text" id="" />
+              <input v-model="memberData.last_name" type="text" id="lastname" placeholder="กรุณาใส่นามสกุล"/>
             </div>
-            <div class="col-md-12"><label>ตำเเหน่งในห้อง</label></div>
+            <div class="col-md-12"><label for="rank">ตำเเหน่งในห้อง</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.member_type" type="text" id="" />
+              <input v-model="memberData.member_type" type="text" id="rank" placeholder="กรุณาใส่ตำแหน่งนักเรียน"/>
             </div>
             <div class="col-md-12"><label for="address">ที่อยู่</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.address" type="text" id="address" />
+              <input v-model="memberData.address" type="text" id="address" placeholder="กรุณาใส่ที่อยู่"/>
             </div>
           </div>
           <div class="button-add-data-main">
@@ -133,7 +133,7 @@ export default {
         "https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member"
       );
       this.getdataStudent = response.data;
-      console.log("getdataStudent", this.getdataStudent[0]);
+      // console.log("getdataStudent", this.getdataStudent[0]);
     },
     async deleteProfile(id) {
       const res = await axios.delete(
@@ -168,6 +168,27 @@ export default {
 </script>
 
 <style lang="scss">
+@media only screen and (min-width: 768px) and (max-width: 1024px){
+  .input-data-content-main{
+    width: 60% !important;
+  }
+  .head-profile-student{
+    table{
+    .button-edit {
+      button{
+        width: 40px !important;
+        font-size: 9px;
+      }
+    }
+    th{
+      font-size: 14px !important;
+    }
+    td{
+      font-size: 12px;
+    }
+  }
+  }
+}
 @media only screen and (max-width: 600px) {
   .head-content{
     justify-content: center;
@@ -214,6 +235,7 @@ ul {
   }
   input {
     width: 100%;
+    border: 1px solid ;
   }
   .button-add-data-main {
     text-align: center;
