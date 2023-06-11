@@ -55,12 +55,22 @@
               <label for="rank">ตำเเหน่งในห้อง</label>
             </div>
             <div class="col-md-12">
-              <input
+              <!-- <input
                 v-model="memberData.member_type"
                 type="text"
                 id="rank"
                 placeholder="กรุณาใส่ตำแหน่งนักเรียน"
-              />
+              /> -->
+              <select
+                v-model="memberData.member_type"
+                type="text"
+                id="rank"
+                placeholder="กรุณาใส่ตำแหน่งนักเรียน"
+              >
+              
+                <option  value="leader">leader</option>
+                <option value="member">member</option>
+              </select>
             </div>
             <div class="col-md-12"><label for="address">ที่อยู่</label></div>
             <div class="col-md-12">
@@ -279,6 +289,9 @@ ul {
   input {
     width: 100%;
     border: 1px solid;
+  }
+  select{
+    width: 100%;
   }
   .button-add-data-main {
     text-align: center;
