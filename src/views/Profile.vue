@@ -12,29 +12,64 @@
           </div>
 
           <div class="row">
-            <div class="col-md-12"><label for="room">ห้อง </label></div>
             <div class="col-md-12">
-              <input v-model="memberData.room" type="text" id="room" placeholder="กรุณาใส่เลขห้อง" />
+              <label for="room">ห้อง </label>
+            </div>
+            <div class="col-md-12">
+              <input
+                v-model="memberData.room"
+                type="text"
+                id="room"
+                placeholder="กรุณาใส่เลขห้อง"
+                :disabled="isLeader"
+              />
             </div>
             <div class="col-md-12"><label for="number">เลขที่</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.rank" type="text" id="number" placeholder="กรุณาใส่เลขที่"/>
+              <input
+                v-model="memberData.rank"
+                type="text"
+                id="number"
+                placeholder="กรุณาใส่เลขที่"
+              />
             </div>
             <div class="col-md-12"><label for="fristname">ชื่อ </label></div>
             <div class="col-md-12">
-              <input v-model="memberData.first_name" type="text" id="fristname" placeholder="กรุณาใส่ชื่อ"/>
+              <input
+                v-model="memberData.first_name"
+                type="text"
+                id="fristname"
+                placeholder="กรุณาใส่ชื่อ"
+              />
             </div>
             <div class="col-md-12"><label for="lastname">นามสกุล</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.last_name" type="text" id="lastname" placeholder="กรุณาใส่นามสกุล"/>
+              <input
+                v-model="memberData.last_name"
+                type="text"
+                id="lastname"
+                placeholder="กรุณาใส่นามสกุล"
+              />
             </div>
-            <div class="col-md-12"><label for="rank">ตำเเหน่งในห้อง</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.member_type" type="text" id="rank" placeholder="กรุณาใส่ตำแหน่งนักเรียน"/>
+              <label for="rank">ตำเเหน่งในห้อง</label>
+            </div>
+            <div class="col-md-12">
+              <input
+                v-model="memberData.member_type"
+                type="text"
+                id="rank"
+                placeholder="กรุณาใส่ตำแหน่งนักเรียน"
+              />
             </div>
             <div class="col-md-12"><label for="address">ที่อยู่</label></div>
             <div class="col-md-12">
-              <input v-model="memberData.address" type="text" id="address" placeholder="กรุณาใส่ที่อยู่"/>
+              <input
+                v-model="memberData.address"
+                type="text"
+                id="address"
+                placeholder="กรุณาใส่ที่อยู่"
+              />
             </div>
           </div>
           <div class="button-add-data-main">
@@ -96,6 +131,7 @@
                 type="button"
                 class="btn btn-danger"
                 @click="deleteProfile(item.id)"
+                v-if="item.member_type !== 'leader'"
               >
                 ลบ
               </button>
@@ -136,6 +172,12 @@ export default {
       // console.log("getdataStudent", this.getdataStudent[0]);
     },
     async deleteProfile(id) {
+      const student = this.getdataStudent.find((item) => item.id === id);
+      if (student.member_type === "leader") {
+        // Prevent deletion of students with 'leader' role
+        alert('Cannot delete student with a "leader" role.');
+        return;
+      }
       const res = await axios.delete(
         `https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member/${id}`
       );
@@ -160,65 +202,66 @@ export default {
     editDataStudent(item) {
       this.memberData = { ...item };
       this.isEdit = true;
-
-      // console.log("itemdata",item )
+    },
+  },
+  computed: {
+    isLeader() {
+      return this.memberData.member_type === "leader";
     },
   },
 };
 </script>
 
 <style lang="scss">
-@media only screen and (min-width: 768px) and (max-width: 1024px){
-  .input-data-content-main{
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .input-data-content-main {
     width: 60% !important;
   }
-  .head-profile-student{
-    table{
-    .button-edit {
-      button{
-        width: 40px !important;
-        font-size: 9px;
+  .head-profile-student {
+    table {
+      .button-edit {
+        button {
+          width: 40px !important;
+          font-size: 9px;
+        }
+      }
+      th {
+        font-size: 14px !important;
+      }
+      td {
+        font-size: 12px;
       }
     }
-    th{
-      font-size: 14px !important;
-    }
-    td{
-      font-size: 12px;
-    }
-  }
   }
 }
 @media only screen and (max-width: 600px) {
-  .head-content{
+  .head-content {
     justify-content: center;
-  } 
-  .input-data-content-main{
+  }
+  .input-data-content-main {
     width: 100% !important;
-    button{
+    button {
       width: 40% !important;
       font-size: 12px;
       margin: 1rem 0.5rem 0 !important;
+    }
+  }
+  .head-profile-student {
+    table {
+      .button-edit {
+        button {
+          width: 40px !important;
+          font-size: 8px;
+        }
       }
-  }
-  .head-profile-student{
-    table{
-    .button-edit {
-      button{
-        width: 40px !important;
-        font-size: 8px;
+      th {
+        font-size: 12px !important;
+      }
+      td {
+        font-size: 10px;
       }
     }
-    th{
-      font-size: 12px !important;
-    }
-    td{
-      font-size: 10px;
-    }
   }
-  }
- 
-  
 }
 p,
 ul {
@@ -230,12 +273,12 @@ ul {
   margin: auto;
   border: 1px solid black;
   background: azure;
-  .head-input-data{
+  .head-input-data {
     text-align: center;
   }
   input {
     width: 100%;
-    border: 1px solid ;
+    border: 1px solid;
   }
   .button-add-data-main {
     text-align: center;
@@ -265,7 +308,7 @@ table {
   text-align: center;
   border-collapse: collapse;
   table-layout: fixed;
-  
+
   th {
     font-size: 18px;
     border: 1px solid black;
@@ -285,5 +328,4 @@ table {
     }
   }
 }
-
 </style>
