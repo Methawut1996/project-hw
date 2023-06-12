@@ -29,16 +29,15 @@
                 </option>
               </select>
             </div>
-            
-              <!-- <form id="app" @submit="checkForm" action="/something" method="post"><p v-if="errors.length">
+
+            <!-- <form id="app" @submit="checkForm" action="/something" method="post"><p v-if="errors.length">
     <b>Please correct the following error(s):</b>
     <ul>
       <li v-for="error in errors" :key="error">{{ error }}</li>
     </ul>
   </p>
   </form> -->
-              
-            
+
             <div class="col-md-12"><label for="number">เลขที่</label></div>
             <div class="col-md-12">
               <input
@@ -72,7 +71,6 @@
               <label for="rank">ตำเเหน่งในห้อง</label>
             </div>
             <div class="col-md-12">
-              
               <select
                 v-model="memberData.member_type"
                 type="text"
@@ -173,7 +171,7 @@ export default {
     return {
       getdataStudent: [],
       isEdit: false,
-      errors:[],
+      errors: [],
       memberData: {
         first_name: "",
         last_name: "",
@@ -208,31 +206,22 @@ export default {
     },
     async createMember() {
       if (!this.validateForm()) {
-    alert("คุณใส่ข้อมูลไม่ครบ");
-    return;
-  }
+        alert("คุณใส่ข้อมูลไม่ครบ");
+        return;
+      }
       const res = await axios.post(
         "https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member",
         this.memberData
-        
       );
       this.getData();
-  this.resetForm();
-      this.memberData = {
-        first_name: "",
-        last_name: "",
-        member_type: "",
-        rank: "",
-        address: "",
-        room: "",
-      }
-      this.getData();
+      this.resetForm();
+
     },
     async editMember() {
       if (!this.validateForm()) {
-    alert("คุณใส่ข้อมูลไม่ครบ");
-    return;
-  }
+        alert("คุณใส่ข้อมูลไม่ครบ");
+        return;
+      }
 
       let payload = { ...this.memberData };
       payload.id = Number(payload.id);
@@ -240,6 +229,16 @@ export default {
         `https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member/${this.memberData.id} `,
         payload
       );
+      
+      this.getData();
+      this.resetForm();
+    },
+    validateForm() {
+      const { room, rank, first_name, last_name, address ,member_type} = this.memberData;
+      return room && rank && first_name && last_name && address &&  member_type;
+    },
+
+    resetForm() {
       this.memberData = {
         first_name: "",
         last_name: "",
@@ -247,25 +246,8 @@ export default {
         rank: "",
         address: "",
         room: "",
-      }
-      this.getData();
-      this.resetForm();
+      };
     },
-    validateForm() {
-  const { room, rank, first_name, last_name } = this.memberData;
-  return room && rank && first_name && last_name;
-},
-
-resetForm() {
-  this.memberData = {
-    first_name: "",
-    last_name: "",
-    member_type: "",
-    rank: "",
-    address: "",
-    room: "",
-  };
-},
     editDataStudent(item) {
       this.memberData = { ...item };
       this.isEdit = true;
@@ -275,18 +257,6 @@ resetForm() {
       if (/^[A-Za-z]+$/.test(char)) return true; // Match with regex
       else e.preventDefault(); // If not match, don't add to input text
     },
-    // checkForm:function(e) {
-    //   if(this.memberData) return true;
-    //   this.errors = [];
-    //   if(!this.memberData.first_name) this.errors.push("Name required.");
-    //   if(!this.memberData.last_name) this.errors.push("lastname required.");
-    //   if(!this.memberData.member_type) this.errors.push("rank required.");
-    //   if(!this.memberData.rank) this.errors.push("Number required.");
-    //   if(!this.memberData.address) this.errors.push("Address required.");
-    //   if(!this.memberData.room) this.errors.push("Room required.");
-      
-    //   e.preventDefault();
-    // },
   },
   computed: {
     isLeader() {
