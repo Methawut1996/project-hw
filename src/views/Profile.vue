@@ -18,7 +18,7 @@
             <div class="col-md-12">
               <input
                 v-model="memberData.room"
-                type="text"
+                type="number"
                 id="room"
                 placeholder="กรุณาใส่เลขห้อง"
                 :disabled="isLeader"
@@ -28,7 +28,7 @@
             <div class="col-md-12">
               <input
                 v-model="memberData.rank"
-                type="text"
+                type="number"
                 id="number"
                 placeholder="กรุณาใส่เลขที่"
               />
@@ -40,6 +40,7 @@
                 type="text"
                 id="fristname"
                 placeholder="กรุณาใส่ชื่อ"
+                @input="filterNumbers"
               />
             </div>
             <div class="col-md-12"><label for="lastname">นามสกุล</label></div>
@@ -49,6 +50,7 @@
                 type="text"
                 id="lastname"
                 placeholder="กรุณาใส่นามสกุล"
+                @input="filterNumbers"
               />
             </div>
             <div class="col-md-12">
@@ -70,6 +72,7 @@
               
                 <option  value="leader">leader</option>
                 <option value="member">member</option>
+                <option value="member">ast</option>
               </select>
             </div>
             <div class="col-md-12"><label for="address">ที่อยู่</label></div>
@@ -184,7 +187,7 @@ export default {
     async deleteProfile(id) {
       const student = this.getdataStudent.find((item) => item.id === id);
       if (student.member_type === "leader") {
-        // Prevent deletion of students with 'leader' role
+        
         alert('Cannot delete student with a "leader" role.');
         return;
       }
@@ -212,6 +215,12 @@ export default {
     editDataStudent(item) {
       this.memberData = { ...item };
       this.isEdit = true;
+    },
+    filterNumbers(event) {
+      const input = event.target;
+      const filteredValue = input.value.replace(/[0-9]/g, ''); 
+      input.value = filteredValue;
+      this.memberData[input.id] = filteredValue.trim(); 
     },
   },
   computed: {
