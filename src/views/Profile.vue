@@ -16,14 +16,33 @@
               <label for="room">ห้อง </label>
             </div>
             <div class="col-md-12">
-              <input
+              <!-- <input
                 v-model="memberData.room"
                 type="number"
                 id="room"
                 placeholder="กรุณาใส่เลขห้อง"
                 :disabled="isLeader"
-              />
+              /> -->
+              <select
+                v-model="memberData.room"
+                type="number"
+                id="room"
+                placeholder="กรุณาใส่เลขห้อง"
+                :disabled="isLeader"
+              >
+                <option value="" disabled>กรุณาเลือกห้อง</option>
+                <option v-for="(item, i) in 10" :key="i" :value="item">
+                  {{ item }}
+                </option>
+              </select>
             </div>
+            
+            <p v-if="errors.length">
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-for="error in errors" :key="error">{{ error }}</li>
+    </ul>
+  </p>
             <div class="col-md-12"><label for="number">เลขที่</label></div>
             <div class="col-md-12">
               <input
@@ -40,7 +59,7 @@
                 type="text"
                 id="fristname"
                 placeholder="กรุณาใส่ชื่อ"
-                @input="filterNumbers"
+                @keypress="isLetter"
               />
             </div>
             <div class="col-md-12"><label for="lastname">นามสกุล</label></div>
@@ -50,7 +69,7 @@
                 type="text"
                 id="lastname"
                 placeholder="กรุณาใส่นามสกุล"
-                @input="filterNumbers"
+                @keypress="isLetter"
               />
             </div>
             <div class="col-md-12">
@@ -69,10 +88,10 @@
                 id="rank"
                 placeholder="กรุณาใส่ตำแหน่งนักเรียน"
               >
-              
-                <option  value="leader">leader</option>
+                <option value="" disabled>กรุณาเลือกห้อง</option>
+                <option value="leader">leader</option>
                 <option value="member">member</option>
-                <option value="member">ast</option>
+                <option value="ast">ast</option>
               </select>
             </div>
             <div class="col-md-12"><label for="address">ที่อยู่</label></div>
@@ -163,6 +182,7 @@ export default {
     return {
       getdataStudent: [],
       isEdit: false,
+      errors:[],
       memberData: {
         first_name: "",
         last_name: "",
@@ -187,7 +207,6 @@ export default {
     async deleteProfile(id) {
       const student = this.getdataStudent.find((item) => item.id === id);
       if (student.member_type === "leader") {
-        
         alert('Cannot delete student with a "leader" role.');
         return;
       }
@@ -200,7 +219,16 @@ export default {
       const res = await axios.post(
         "https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member",
         this.memberData
+        
       );
+      this.memberData = {
+        first_name: "",
+        last_name: "",
+        member_type: "",
+        rank: "",
+        address: "",
+        room: "",
+      }
       this.getData();
     },
     async editMember() {
@@ -210,17 +238,36 @@ export default {
         `https://647efbeec246f166da8fd1bd.mockapi.io/api/student/member/${this.memberData.id} `,
         payload
       );
+      this.memberData = {
+        first_name: "",
+        last_name: "",
+        member_type: "",
+        rank: "",
+        address: "",
+        room: "",
+      }
       this.getData();
     },
     editDataStudent(item) {
       this.memberData = { ...item };
       this.isEdit = true;
     },
-    filterNumbers(event) {
-      const input = event.target;
-      const filteredValue = input.value.replace(/[0-9]/g, ''); 
-      input.value = filteredValue;
-      this.memberData[input.id] = filteredValue.trim(); 
+    isLetter(e) {
+      let char = String.fromCharCode(e.keyCode); // Get the character
+      if (/^[A-Za-z]+$/.test(char)) return true; // Match with regex
+      else e.preventDefault(); // If not match, don't add to input text
+    },
+    checkForm:function(e) {
+      if(this.memberData) return true;
+      this.errors = [];
+      if(!this.memberData.first_name) this.errors.push("Name required.");
+      if(!this.memberData.last_name) this.errors.push("lastname required.");
+      if(!this.memberData.member_type) this.errors.push("rank required.");
+      if(!this.memberData.rank) this.errors.push("Number required.");
+      if(!this.memberData.address) this.errors.push("Address required.");
+      if(!this.memberData.room) this.errors.push("Room required.");
+      // if(!this.age) this.errors.push("Age required.");
+      e.preventDefault();
     },
   },
   computed: {
@@ -299,7 +346,7 @@ ul {
     width: 100%;
     border: 1px solid;
   }
-  select{
+  select {
     width: 100%;
   }
   .button-add-data-main {
